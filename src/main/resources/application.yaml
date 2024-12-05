@@ -1,1 +1,44 @@
+server:
+  port: 9090
 
+spring:
+  application:
+    name: healthcare-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/satusehat
+    username: yasir
+    password: yasir
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: CLIENT_ID
+            client-secret: CLIENT_SECRET
+            redirect-uri: "{baseUrl}/login/oauth2/code/google"
+            scope:
+              - email
+              - profile
+          satusehat:
+            client-id: CLIENT_ID
+            client-secret: CLIENT_SECRET
+            scope: read
+            authorization-grant-type: client_credentials
+            provider: satusehat-provider
+        provider:
+          satusehat-provider:
+            token-uri: https://api-satusehat-stg.dto.kemkes.go.id/oauth2/v1
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+
+app:
+  allowed-origins: http://localhost
